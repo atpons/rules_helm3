@@ -43,15 +43,15 @@ def find_values_yaml_path(files, values_yaml):
 
 def gen_helm_command_template(cmd, kube_context = "", dry_run = True):
   if dry_run:
-    prefix = "#!/bin/bash\nROOT=$(pwd)\ncd @@VALUES_YAML_DIR@@\necho DRY_RUN: $ROOT/@@HELM@@ "
+    prefix = "#!/bin/bash\nROOT=$(pwd)\ncd @@VALUES_YAML_DIR@@\necho DRY_RUN: $ROOT/@@HELM@@ \n$ROOT/@@HELM@@ "
   else:
     prefix = "#!/bin/bash\nROOT=$(pwd)\ncd @@VALUES_YAML_DIR@@\n$ROOT/@@HELM@@ "
   if kube_context != "":
     prefix += "--kube-context %s " % (kube_context)
   if cmd == "install":
-    return prefix + "upgrade @@RELEASE_NAME@@ . -i -f @@VALUES_YAML@@"
+    return prefix + "upgrade %s @@RELEASE_NAME@@ . -i -f @@VALUES_YAML@@" % ("--dry-run" if dry_run else "")
   if cmd == "uninstall":
-    return prefix + "uninstall @@RELEASE_NAME@@"
+    return prefix + "uninstall %s @@RELEASE_NAME@@" % ("--dry-run" if dry_run else "")
   return prefix + "version"
 
 
