@@ -1,5 +1,4 @@
-load("@com_github_atpons_rules_helm3//helm3:rules.bzl", "helm3_version")
-
+load("@com_github_atpons_rules_helm3//helm3:helm3_version.bzl", "helm3_version")
 helm3_version(
   name = "version",
 )
