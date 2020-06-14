@@ -43,9 +43,9 @@ def find_values_yaml_path(files, values_yaml):
 
 def gen_helm_command_template(cmd, kube_context = "", dry_run = True):
   if dry_run:
-    prefix = "#!/bin/bash\nROOT=$(pwd)\ncd @@VALUES_YAML_DIR@@\nls -al\necho DRY_RUN: $ROOT/@@HELM@@ "
+    prefix = "#!/bin/bash\nROOT=$(pwd)\ncd @@VALUES_YAML_DIR@@\necho DRY_RUN: $ROOT/@@HELM@@ "
   else:
-    prefix = "#!/bin/bash\nROOT=$(pwd)\ncd @@VALUES_YAML_DIR@@\nls -al\n$ROOT/@@HELM@@ "
+    prefix = "#!/bin/bash\nROOT=$(pwd)\ncd @@VALUES_YAML_DIR@@\n$ROOT/@@HELM@@ "
   if kube_context != "":
     prefix += "--kube-context %s " % (kube_context)
   if cmd == "install":
